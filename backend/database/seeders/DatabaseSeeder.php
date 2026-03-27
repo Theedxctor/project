@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // ── Read from data.json ───────────────────────────────────────────────
-        $dataPath = base_path('../data.json');
+        $dataPath = base_path('data.json');
         if (file_exists($dataPath)) {
             $data = json_decode(file_get_contents($dataPath), true);
 
