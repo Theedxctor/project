@@ -12,15 +12,15 @@ export default function HomePage() {
   useEffect(() => { api.get('/restaurants').then(r => setRestaurants(r.data)).finally(() => setLoading(false)); }, []);
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg,#0d0d18 0%,#0a0a0f 100%)' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0f' }}>
       {/* Hero */}
       <div style={{ textAlign: 'center', padding: '5rem 1.5rem 3rem' }}>
         <div style={{ display: 'inline-block', background: 'rgba(108,99,255,0.15)', border: '1px solid rgba(108,99,255,0.3)', borderRadius: 100, padding: '0.4rem 1.2rem', color: '#6c63ff', fontWeight: 600, fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-          🎓 Strathmore University
+          Strathmore University
         </div>
-        <h1 style={{ fontSize: 'clamp(2.5rem,6vw,4rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1rem' }}>
+        <h1 style={{ fontSize: 'clamp(2.5rem,6vw,4rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1rem', color: '#fff' }}>
           Skip the queue.<br />
-          <span style={{ background: 'linear-gradient(135deg,#6c63ff,#ff6b6b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <span>
             Order ahead.
           </span>
         </h1>
@@ -34,7 +34,7 @@ export default function HomePage() {
 
       {/* Restaurants */}
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1.5rem 5rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>🏪 Campus Restaurants</h2>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>On Campus Restaurants</h2>
         {loading ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))', gap: '1.5rem' }}>
             {[1,2,3].map(i => <div key={i} style={{ height: 220, borderRadius: 20, background: '#13131a', animation: 'pulse 1.5s infinite' }} />)}
@@ -47,9 +47,7 @@ export default function HomePage() {
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 48px rgba(0,0,0,0.4)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>
                   {/* Image placeholder */}
-                  <div style={{ height: 140, background: 'linear-gradient(135deg,#1c1c27,#2a2a3a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>
-                    {r.name.includes('Java') ? '☕' : r.name.includes('Grill') ? '🔥' : '🍽'}
-                  </div>
+                  <div style={{ height: 140, background: 'linear-gradient(135deg,#1c1c27,#2a2a3a)', borderBottom: '1px solid #2a2a3a' }} />
                   <div style={{ padding: '1.2rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                       <h3 style={{ fontWeight: 700, fontSize: '1.1rem', color: '#e8e8f0' }}>{r.name}</h3>

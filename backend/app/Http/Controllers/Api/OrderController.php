@@ -169,4 +169,23 @@ class OrderController extends Controller
 
         return response()->json($order->load(['user', 'restaurant', 'items.food']));
     }
+
+    /**
+     * DELETE /api/v1/orders/{id}
+     */
+    public function destroy(Request $request, Order $order)
+    {
+        if ($order->user_id !== $request->user()->id) {
+            abort(403, 'Unauthorized.');
+        }
+
+        if ($order->status !== 'Pending') {
+            abort(422, 'Only pending orders can be removed.');
+        }
+
+        $order->items()->delete();
+        $order->delete();
+
+        return response()->json(['message' => 'Order removed.']);
+    }
 }

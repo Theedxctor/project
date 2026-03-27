@@ -35,6 +35,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::post('/orders',              [OrderController::class, 'store']);
     Route::post('/orders/{order}/pay',  [OrderController::class, 'pay']);
     Route::get('/orders/{order}',       [OrderController::class, 'show']);
+    Route::delete('/orders/{order}',    [OrderController::class, 'destroy']);
 
     // ── Admin / Vendor_Staff: Orders ─────────────────────────────────────────
     Route::middleware('role:Admin,Vendor_Staff')->group(function () {

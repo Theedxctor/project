@@ -42,84 +42,46 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // ── Restaurants ───────────────────────────────────────────────────────
-        $mainCafe = Restaurant::updateOrCreate(
-            ['slug' => 'main-cafeteria'],
-            [
-                'name'   => 'Main Cafeteria',
-                'image'  => '/images/restaurants/main-cafeteria.jpg',
-                'status' => 'Open',
-            ]
-        );
+        // ── Read from data.json ───────────────────────────────────────────────
+        $dataPath = base_path('../data.json');
+        if (file_exists($dataPath)) {
+            $data = json_decode(file_get_contents($dataPath), true);
 
-        $javaCafe = Restaurant::updateOrCreate(
-            ['slug' => 'java-heaven'],
-            [
-                'name'   => 'Java Heaven',
-                'image'  => '/images/restaurants/java-heaven.jpg',
-                'status' => 'Open',
-            ]
-        );
+            $restaurantIds = [];
+            foreach ($data['restaurants'] as $rest) {
+                $slug = \Illuminate\Support\Str::slug($rest['name']);
+                $dbRestaurant = Restaurant::updateOrCreate(
+                    ['slug' => $slug],
+                    [
+                        'name'   => $rest['name'],
+                        'image'  => null,
+                        'status' => 'Open',
+                    ]
+                );
+                $restaurantIds[$rest['id']] = $dbRestaurant->id;
+            }
 
-        $grill = Restaurant::updateOrCreate(
-            ['slug' => 'strath-grill'],
-            [
-                'name'   => 'Strath Grill',
-                'image'  => '/images/restaurants/strath-grill.jpg',
-                'status' => 'Closed',
-            ]
-        );
+            foreach ($data['menu_items'] as $item) {
+                if (!isset($restaurantIds[$item['restaurant_id']])) continue;
 
-        // ── Main Cafeteria Foods ──────────────────────────────────────────────
-        $mainFoods = [
-            ['name' => 'Mandazi',  'price' => 20,  'category' => 'Morning',  'image_path' => '/images/foods/mandazi.jpg'],
-            ['name' => 'Uji',      'price' => 30,  'category' => 'Morning',  'image_path' => '/images/foods/uji.jpg'],
-            ['name' => 'Pilau',    'price' => 150, 'category' => 'Evening',  'image_path' => '/images/foods/pilau.jpg'],
-            ['name' => 'Ugali na Nyama', 'price' => 120, 'category' => 'Evening', 'image_path' => '/images/foods/ugali.jpg'],
-            ['name' => 'Chapati', 'price' => 30,  'category' => 'All-day',  'image_path' => '/images/foods/chapati.jpg'],
-            ['name' => 'Water (500ml)', 'price' => 50, 'category' => 'All-day', 'image_path' => '/images/foods/water.jpg'],
-        ];
-
-        foreach ($mainFoods as $food) {
-            Food::updateOrCreate(
-                ['restaurant_id' => $mainCafe->id, 'name' => $food['name']],
-                array_merge($food, ['restaurant_id' => $mainCafe->id, 'is_available' => true])
-            );
+                $dbRestId = $restaurantIds[$item['restaurant_id']];
+                Food::updateOrCreate(
+                    ['restaurant_id' => $dbRestId, 'name' => $item['name']],
+                    [
+                        'restaurant_id' => $dbRestId,
+                        'name'          => $item['name'],
+                        'price'         => $item['price'],
+                        'category'      => $item['category'],
+                        'image_path'    => null,
+                        'is_available'  => true,
+                    ]
+                );
+            }
+        } else {
+            $this->command->error("data.json not found at {$dataPath}");
         }
 
-        // ── Java Heaven Foods ─────────────────────────────────────────────────
-        $javaFoods = [
-            ['name' => 'Espresso',     'price' => 80,  'category' => 'Morning', 'image_path' => '/images/foods/espresso.jpg'],
-            ['name' => 'Cappuccino',   'price' => 120, 'category' => 'Morning', 'image_path' => '/images/foods/cappuccino.jpg'],
-            ['name' => 'English Breakfast', 'price' => 200, 'category' => 'Morning', 'image_path' => '/images/foods/breakfast.jpg'],
-            ['name' => 'Club Sandwich','price' => 250, 'category' => 'Evening', 'image_path' => '/images/foods/sandwich.jpg'],
-            ['name' => 'Brownie',      'price' => 100, 'category' => 'All-day', 'image_path' => '/images/foods/brownie.jpg'],
-            ['name' => 'Fresh Juice',  'price' => 150, 'category' => 'All-day', 'image_path' => '/images/foods/juice.jpg'],
-        ];
-
-        foreach ($javaFoods as $food) {
-            Food::updateOrCreate(
-                ['restaurant_id' => $javaCafe->id, 'name' => $food['name']],
-                array_merge($food, ['restaurant_id' => $javaCafe->id, 'is_available' => true])
-            );
-        }
-
-        // ── Strath Grill Foods ────────────────────────────────────────────────
-        $grillFoods = [
-            ['name' => 'Beef Burger',   'price' => 350, 'category' => 'Evening', 'image_path' => '/images/foods/burger.jpg'],
-            ['name' => 'Chicken Wings', 'price' => 300, 'category' => 'Evening', 'image_path' => '/images/foods/wings.jpg'],
-            ['name' => 'Chips',         'price' => 100, 'category' => 'All-day', 'image_path' => '/images/foods/chips.jpg'],
-            ['name' => 'Soda (330ml)',  'price' => 80,  'category' => 'All-day', 'image_path' => '/images/foods/soda.jpg'],
-        ];
-
-        foreach ($grillFoods as $food) {
-            Food::updateOrCreate(
-                ['restaurant_id' => $grill->id, 'name' => $food['name']],
-                array_merge($food, ['restaurant_id' => $grill->id, 'is_available' => true])
-            );
-        }
-
-        $this->command->info('✅ StrathFood database seeded successfully!');
+        $this->command->info('✅ StrathFood database seeded successfully from data.json!');
         $this->command->info('   Admin:   admin@strathmore.edu / password');
         $this->command->info('   Vendor:  vendor@strathmore.edu / password');
         $this->command->info('   Student: student@strathmore.edu / password');

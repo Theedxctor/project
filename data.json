@@ -1,0 +1,69 @@
+
+{
+  "restaurants": [
+    {"id": 1, "name": "Coffee Bar", "location": "Student Centre", "type": "Cafe"},
+    {"id": 2, "name": "Strathmore Cafeteria", "location": "Main Building", "type": "Buffet"},
+    {"id": 3, "name": "Kilimanjaro", "location": "Student Centre", "type": "Multi-Cuisine"},
+    {"id": 4, "name": "Springs of Olive", "location": "Moot Court", "type": "Catering"},
+    {"id": 5, "name": "Upesi Joint", "location": "Student Centre", "type": "Fast Food"},
+    {"id": 6, "name": "Pate Cafe", "location": "Student Centre", "type": "Restaurant"}
+  ],
+    "menu_items": [
+    {"restaurant_id": 1, "name": "Cappuccino", "price": 180, "category": "Morning", "description": "Double shot with frothy milk"},
+    {"restaurant_id": 1, "name": "Blueberry Muffin", "price": 150, "category": "Morning", "description": "Freshly baked daily"},
+    {"restaurant_id": 1, "name": "Caramel Latte", "price": 220, "category": "All-day", "description": "Sweet and creamy"},
+    {"restaurant_id": 1, "name": "Iced Hibiscus Tea", "price": 120, "category": "All-day", "description": "Refreshing herbal brew"},
+    {"restaurant_id": 1, "name": "Chocolate Croissant", "price": 180, "category": "Morning", "description": "Buttery and flaky"},
+    {"restaurant_id": 1, "name": "Mango Smoothie", "price": 250, "category": "All-day", "description": "Real fruit blend"},
+    {"restaurant_id": 1, "name": "Bagel & Cream Cheese", "price": 200, "category": "Morning", "description": "Toasted New York style"},
+    {"restaurant_id": 1, "name": "Hot Chocolate", "price": 150, "category": "Evening", "description": "Rich Belgian cocoa"},
+    {"restaurant_id": 1, "name": "Cheapest Tester", "price": 5, "category": "All-day", "description": "Rich Me"},
+
+    {"restaurant_id": 2, "name": "Tea & Mandazi", "price": 60, "category": "Morning", "description": "Classic Kenyan breakfast"},
+    {"restaurant_id": 2, "name": "Sweet Potato & Porridge", "price": 100, "category": "Morning", "description": "Healthy traditional start"},
+    {"restaurant_id": 2, "name": "Ugali Beef & Sukuma", "price": 220, "category": "Evening", "description": "The student staple"},
+    {"restaurant_id": 2, "name": "Rice & Beans (Yellow)", "price": 150, "category": "Evening", "description": "Budget-friendly and filling"},
+    {"restaurant_id": 2, "name": "Fried Fish & Ugali", "price": 300, "category": "Evening", "description": "Whole tilapia with kachumbari"},
+    {"restaurant_id": 2, "name": "Githeri Special", "price": 120, "category": "Morning", "description": "Boiled maize and beans fried with onions"},
+    {"restaurant_id": 2, "name": "Beef Stew & Chapati", "price": 250, "category": "Evening", "description": "Two chapatis with tender beef"},
+    {"restaurant_id": 2, "name": "Cabbage & Rice", "price": 110, "category": "Evening", "description": "Simple and nutritious"},
+
+    {"restaurant_id": 3, "name": "Mutton Biryani", "price": 680, "category": "All-day", "description": "Slow-cooked Somali style mutton"},
+    {"restaurant_id": 3, "name": "Beef Pilau", "price": 400, "category": "All-day", "description": "Fragrant coastal rice dish"},
+    {"restaurant_id": 3, "name": "Basta (Pasta) Suqaar", "price": 450, "category": "All-day", "description": "Spaghetti with diced beef and peppers"},
+    {"restaurant_id": 3, "name": "Anjero & Tea", "price": 200, "category": "Morning", "description": "Traditional sourdough pancakes"},
+    {"restaurant_id": 3, "name": "Grilled Chicken (Quarter)", "price": 350, "category": "Evening", "description": "Flame grilled with spices"},
+    {"restaurant_id": 3, "name": "Fish Fillet & Chips", "price": 550, "category": "Evening", "description": "Crispy battered Nile Perch"},
+    {"restaurant_id": 3, "name": "Camel Milk (Glass)", "price": 150, "category": "All-day", "description": "Nutritious traditional milk"},
+    {"restaurant_id": 3, "name": "Vegetable Curry", "price": 300, "category": "Evening", "description": "Mixed veg in thick gravy"},
+
+    {"restaurant_id": 4, "name": "Boiled Maize & Beans", "price": 130, "category": "Morning", "description": "Wholesome and fiber-rich"},
+    {"restaurant_id": 4, "name": "Nduma (Arrow Root)", "price": 120, "category": "Morning", "description": "Steamed traditional tuber"},
+    {"restaurant_id": 4, "name": "Managu & Ugali", "price": 180, "category": "Evening", "description": "Indigenous greens with beef fat"},
+    {"restaurant_id": 4, "name": "Beef Liver & Rice", "price": 250, "category": "Morning", "description": "High-iron breakfast option"},
+    {"restaurant_id": 4, "name": "Mukimo & Stew", "price": 280, "category": "Evening", "description": "Mashed maize, beans, and potatoes"},
+    {"restaurant_id": 4, "name": "Omena Special", "price": 160, "category": "Evening", "description": "Fried silver cyprinid with tomatoes"},
+    {"restaurant_id": 4, "name": "Kienyeji Chicken Stew", "price": 450, "category": "Evening", "description": "Free-range chicken in rich soup"},
+    {"restaurant_id": 4, "name": "Uji (Porridge) Cup", "price": 50, "category": "Morning", "description": "Warm fermented millet porridge"},
+
+    {"restaurant_id": 5, "name": "Standard Beef Burger", "price": 350, "category": "All-day", "description": "Grilled patty with lettuce"},
+    {"restaurant_id": 5, "name": "Cheese Burger", "price": 400, "category": "All-day", "description": "With melted cheddar"},
+    {"restaurant_id": 5, "name": "Large Chips", "price": 150, "category": "All-day", "description": "Deep fried golden potatoes"},
+    {"restaurant_id": 5, "name": "Masala Chips", "price": 220, "category": "All-day", "description": "Spicy tomato-based fries"},
+    {"restaurant_id": 5, "name": "Hot Dog", "price": 180, "category": "All-day", "description": "Beef frankfurter in a soft bun"},
+    {"restaurant_id": 5, "name": "Beef Smokey (2)", "price": 80, "category": "All-day", "description": "Quick campus snack"},
+    {"restaurant_id": 5, "name": "Chicken Nuggets (6pcs)", "price": 300, "category": "All-day", "description": "Breaded white meat chicken"},
+    {"restaurant_id": 5, "name": "Samosas (Beef, Pair)", "price": 100, "category": "Morning", "description": "Crunchy and spiced"},
+    {"restaurant_id": 5, "name": "Soda (500ml)", "price": 70, "category": "All-day", "description": "Chilled assorted flavors"},
+
+    {"restaurant_id": 6, "name": "Grilled Sirloin Steak", "price": 950, "category": "Evening", "description": "250g premium beef with mash"},
+    {"restaurant_id": 6, "name": "Chicken Caesar Salad", "price": 600, "category": "All-day", "description": "Romaine lettuce and croutons"},
+    {"restaurant_id": 6, "name": "Mushroom Risotto", "price": 750, "category": "Evening", "description": "Creamy Italian rice dish"},
+    {"restaurant_id": 6, "name": "Pepper Steak", "price": 980, "category": "Evening", "description": "With black peppercorn sauce"},
+    {"restaurant_id": 6, "name": "Vegetable Stir-fry", "price": 550, "category": "All-day", "description": "Wok-tossed seasonal veggies"},
+    {"restaurant_id": 6, "name": "Pasta Carbonara", "price": 700, "category": "Evening", "description": "Classic eggs and bacon sauce"},
+    {"restaurant_id": 6, "name": "Chicken Kebab", "price": 400, "category": "All-day", "description": "Skewered grilled chicken chunks"},
+    {"restaurant_id": 6, "name": "Garden Salad", "price": 350, "category": "All-day", "description": "Fresh greens with vinaigrette"},
+    {"restaurant_id": 6, "name": "T-Bone Steak", "price": 1100, "category": "Evening", "description": "Large cut for the hungry student"}
+  ]
+}

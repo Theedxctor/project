@@ -12,8 +12,8 @@ export default function Navbar() {
   return (
     <nav style={{ background: 'rgba(13,13,20,0.95)', borderBottom: '1px solid #2a2a3a', backdropFilter: 'blur(12px)', position: 'sticky', top: 0, zIndex: 50 }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
-        <Link href="/" style={{ fontWeight: 800, fontSize: '1.3rem', background: 'linear-gradient(135deg,#6c63ff,#ff6b6b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textDecoration: 'none' }}>
-          🍽 StrathFood
+        <Link href="/" style={{ fontWeight: 800, fontSize: '1.3rem', color: '#fff', textDecoration: 'none' }}>
+          StrathFood
         </Link>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           {!user ? (

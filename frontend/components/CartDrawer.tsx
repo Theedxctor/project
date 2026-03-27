@@ -31,8 +31,8 @@ export default function CartDrawer() {
     if (!orderId) return;
     setPaying(true); setMsg('');
     try {
-      await api.post(\`/orders/\${orderId}/pay\`, { phone });
-      setMsg('✅ STK Push sent! Complete payment on your phone.');
+      await api.post(`/orders/${orderId}/pay`, { phone });
+      setMsg('STK Push sent! Complete payment on your phone.');
       clear();
     } catch (e: unknown) {
       setMsg((e as {response?:{data?:{message?:string}}})?.response?.data?.message || 'Payment failed.');
@@ -40,15 +40,15 @@ export default function CartDrawer() {
   };
 
   if (count === 0 && !open) return (
-    <button onClick={() => setOpen(true)} style={{ position:'fixed', bottom:24, right:24, background:'linear-gradient(135deg,#6c63ff,#8b5cf6)', color:'#fff', border:'none', borderRadius:50, width:56, height:56, fontSize:'1.4rem', cursor:'pointer', boxShadow:'0 8px 24px rgba(108,99,255,0.5)', zIndex:100 }}>
-      🛒
+    <button onClick={() => setOpen(true)} style={{ position:'fixed', bottom:24, right:24, background:'linear-gradient(135deg,#6c63ff,#8b5cf6)', color:'#fff', border:'none', borderRadius:50, width:56, height:56, fontSize:'1.2rem', fontWeight:800, cursor:'pointer', boxShadow:'0 8px 24px rgba(108,99,255,0.5)', zIndex:100 }}>
+      Cart
     </button>
   );
 
   return (
     <>
       <button onClick={() => setOpen(true)} style={{ position:'fixed', bottom:24, right:24, background:'linear-gradient(135deg,#6c63ff,#8b5cf6)', color:'#fff', border:'none', borderRadius:50, padding:'0 1.2rem', height:56, fontSize:'1rem', fontWeight:700, cursor:'pointer', boxShadow:'0 8px 24px rgba(108,99,255,0.5)', zIndex:100, display:'flex', alignItems:'center', gap:'0.5rem' }}>
-        🛒 <span>{count}</span> · <span>KES {total.toLocaleString()}</span>
+        Cart <span>{count}</span> · <span>KES {total.toLocaleString()}</span>
       </button>
 
       {open && (
@@ -56,8 +56,8 @@ export default function CartDrawer() {
           <div onClick={() => setOpen(false)} style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.6)', backdropFilter:'blur(4px)' }} />
           <div style={{ position:'absolute', right:0, top:0, bottom:0, width:'min(420px,100vw)', background:'#13131a', borderLeft:'1px solid #2a2a3a', display:'flex', flexDirection:'column', padding:'1.5rem', overflow:'auto' }}>
             <div style={{ display:'flex', justifyContent:'space-between', marginBottom:'1.5rem' }}>
-              <h2 style={{ fontWeight:800, fontSize:'1.25rem' }}>🛒 Your Cart</h2>
-              <button onClick={() => setOpen(false)} style={{ background:'transparent', border:'none', color:'#7070a0', fontSize:'1.4rem', cursor:'pointer' }}>✕</button>
+              <h2 style={{ fontWeight:800, fontSize:'1.25rem' }}>Your Cart</h2>
+              <button onClick={() => setOpen(false)} style={{ background:'transparent', border:'none', color:'#7070a0', fontSize:'1.4rem', cursor:'pointer' }}>×</button>
             </div>
 
             {items.length === 0 && !orderId && <p style={{ color:'#7070a0', textAlign:'center', marginTop:'3rem' }}>Your cart is empty</p>}
@@ -74,7 +74,7 @@ export default function CartDrawer() {
                   <button onClick={() => updateQty(item.id, item.quantity+1)} style={{ background:'#6c63ff', border:'none', color:'#fff', width:28, height:28, borderRadius:8, cursor:'pointer', fontWeight:700 }}>+</button>
                 </div>
                 <span style={{ fontWeight:700, minWidth:70, textAlign:'right' }}>KES {(item.price*item.quantity).toLocaleString()}</span>
-                <button onClick={() => removeItem(item.id)} style={{ background:'transparent', border:'none', color:'#ff6b6b', cursor:'pointer', fontSize:'1.1rem' }}>🗑</button>
+                <button onClick={() => removeItem(item.id)} style={{ background:'transparent', border:'none', color:'#ff6b6b', cursor:'pointer', fontSize:'1.1rem' }}>✕</button>
               </div>
             ))}
 
@@ -89,7 +89,7 @@ export default function CartDrawer() {
 
             {orderId && (
               <div style={{ marginTop:'1.5rem' }}>
-                <p style={{ color:'#00d4aa', fontWeight:600, marginBottom:'1rem' }}>✅ Order #{orderId} created</p>
+                <p style={{ color:'#00d4aa', fontWeight:600, marginBottom:'1rem' }}>Order #{orderId} created</p>
                 <label style={{ display:'block', marginBottom:'0.4rem', color:'#7070a0', fontSize:'0.85rem' }}>M-Pesa Phone Number</label>
                 <input className="input-field" placeholder="0712345678" value={phone} onChange={e => setPhone(e.target.value)} style={{ marginBottom:'0.75rem' }}/>
                 <button className="btn-primary" onClick={pay} disabled={paying || !phone}>{paying ? 'Sending STK...' : 'Pay with M-Pesa'}</button>

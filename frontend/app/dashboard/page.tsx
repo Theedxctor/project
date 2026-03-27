@@ -8,7 +8,6 @@ import Link from 'next/link';
 interface Order { id: number; total: number; status: string; pickup_code: string | null; created_at: string; restaurant: { name: string }; items: { food: { name: string }; quantity: number; unit_price: number }[]; }
 
 const STATUS_COLORS: Record<string, string> = { Pending: '#f59e0b', Paid: '#6c63ff', Ready: '#00d4aa', 'Picked Up': '#7070a0' };
-const STATUS_ICONS: Record<string, string> = { Pending: '⏳', Paid: '💳', Ready: '✅', 'Picked Up': '🎉' };
 
 export default function DashboardPage() {
   const { user, isLoading } = useAuth();
@@ -20,6 +19,16 @@ export default function DashboardPage() {
     if (!isLoading && !user) { router.push('/login'); return; }
     if (user) api.get('/orders/mine').then(r => setOrders(r.data)).finally(() => setLoading(false));
   }, [user, isLoading, router]);
+
+  const handleRemoveOrder = async (orderId: number) => {
+    if (!confirm('Are you sure you want to remove this pending order?')) return;
+    try {
+      await api.delete(`/orders/${orderId}`);
+      setOrders(orders.filter(o => o.id !== orderId));
+    } catch (err) {
+      alert('Failed to remove order');
+    }
+  };
 
   if (isLoading || loading) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7070a0' }}>Loading...</div>;
 
@@ -33,7 +42,6 @@ export default function DashboardPage() {
 
         {orders.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '5rem 2rem' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🍽</div>
             <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>No orders yet</h2>
             <p style={{ color: '#7070a0', marginBottom: '2rem' }}>Browse restaurants and place your first order!</p>
             <Link href="/" style={{ background: 'linear-gradient(135deg,#6c63ff,#8b5cf6)', color: '#fff', padding: '0.75rem 2rem', borderRadius: 12, textDecoration: 'none', fontWeight: 600 }}>Browse Restaurants</Link>
@@ -47,9 +55,16 @@ export default function DashboardPage() {
                     <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.25rem' }}>{order.restaurant?.name}</h3>
                     <p style={{ color: '#7070a0', fontSize: '0.85rem' }}>Order #{order.id} · {new Date(order.created_at).toLocaleDateString()}</p>
                   </div>
-                  <span style={{ background: `${STATUS_COLORS[order.status]}20`, color: STATUS_COLORS[order.status], border: `1px solid ${STATUS_COLORS[order.status]}50`, padding: '0.35rem 1rem', borderRadius: 100, fontWeight: 700, fontSize: '0.85rem' }}>
-                    {STATUS_ICONS[order.status]} {order.status}
-                  </span>
+                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                    {order.status === 'Pending' && (
+                      <button onClick={() => handleRemoveOrder(order.id)} style={{ background: 'transparent', border: '1px solid rgba(255,107,107,0.5)', color: '#ff6b6b', padding: '0.35rem 0.8rem', borderRadius: 100, fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+                        Remove
+                      </button>
+                    )}
+                    <span style={{ background: `${STATUS_COLORS[order.status]}20`, color: STATUS_COLORS[order.status], border: `1px solid ${STATUS_COLORS[order.status]}50`, padding: '0.35rem 1rem', borderRadius: 100, fontWeight: 700, fontSize: '0.85rem' }}>
+                      {order.status}
+                    </span>
+                  </div>
                 </div>
 
                 {order.pickup_code && (
