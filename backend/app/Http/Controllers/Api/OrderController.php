@@ -120,7 +120,8 @@ class OrderController extends Controller
             phone:  $phone,
             amount: (int) ceil($order->total),
             ref:    "ORDER-{$order->id}",
-            desc:   "StrathFood Order #{$order->id}"
+            desc:   "StrathFood Order #{$order->id}",
+            orderId: $order->id
         );
 
         if (!isset($result['ResponseCode']) || $result['ResponseCode'] !== '0') {

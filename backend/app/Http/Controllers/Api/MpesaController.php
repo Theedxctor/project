@@ -32,18 +32,14 @@ class MpesaController extends Controller
             return response()->json(['message' => 'Payment not successful.']);
         }
 
-        // Extract reference (ORDER-{id}) from CallbackMetadata
-        $metadata = collect($body['CallbackMetadata']['Item'] ?? [])
-            ->keyBy('Name');
+        // We encoded the order_id perfectly into the Callback URL!
+        $orderId = (int) $request->query('order_id');
 
-        $ref = optional($metadata->get('AccountReference'))->value;
-
-        if (!$ref || !str_starts_with($ref, 'ORDER-')) {
-            Log::error('Invalid payment reference in callback', $body);
+        if (!$orderId) {
+            Log::error('Invalid payment reference in callback: completely missing order_id', $body);
             return response()->json(['message' => 'Invalid reference.'], 422);
         }
 
-        $orderId = (int) str_replace('ORDER-', '', $ref);
         $order   = Order::find($orderId);
 
         if (!$order) {

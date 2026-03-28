@@ -56,7 +56,7 @@ class MpesaService
      * @param  string  $ref     Account reference (e.g. ORDER-42)
      * @param  string  $desc    Transaction description
      */
-    public function stkPush(string $phone, int $amount, string $ref, string $desc): array
+    public function stkPush(string $phone, int $amount, string $ref, string $desc, int $orderId = null): array
     {
         $timestamp = now()->format('YmdHis');
         $password  = base64_encode($this->shortcode . $this->passkey . $timestamp);
@@ -73,7 +73,7 @@ class MpesaService
                 'PartyA'            => $phone,
                 'PartyB'            => $this->shortcode,
                 'PhoneNumber'       => $phone,
-                'CallBackURL'       => $this->callbackUrl,
+                'CallBackURL'       => $orderId ? $this->callbackUrl . '?order_id=' . $orderId : $this->callbackUrl,
                 'AccountReference'  => $ref,
                 'TransactionDesc'   => $desc,
             ]);
