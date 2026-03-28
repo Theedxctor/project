@@ -37,9 +37,10 @@ class OrderController extends Controller
         $query = Order::with(['user', 'restaurant', 'items.food'])->latest();
 
         if ($user->isVendorStaff()) {
-            // TODO: associate vendor staff with a restaurant via a pivot table if needed
-            // For now, filter by restaurant_id query param
-            $query->where('restaurant_id', $request->restaurant_id);
+            if (!$user->restaurant_id) {
+                return response()->json([]); // No restaurant assigned = no orders
+            }
+            $query->where('restaurant_id', $user->restaurant_id);
         }
 
         return response()->json($query->get());

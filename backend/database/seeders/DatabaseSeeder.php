@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             $data = json_decode(file_get_contents($dataPath), true);
 
             $restaurantIds = [];
+            $firstRestaurantId = null;
             foreach ($data['restaurants'] as $rest) {
                 $slug = \Illuminate\Support\Str::slug($rest['name']);
                 $dbRestaurant = Restaurant::updateOrCreate(
@@ -59,7 +60,14 @@ class DatabaseSeeder extends Seeder
                     ]
                 );
                 $restaurantIds[$rest['id']] = $dbRestaurant->id;
+                
+                if (!$firstRestaurantId) {
+                    $firstRestaurantId = $dbRestaurant->id;
+                }
             }
+
+            // Bind the vendor account to the very first restaurant in data.json for demo
+            User::where('email', 'vendor@strathmore.edu')->update(['restaurant_id' => $firstRestaurantId]);
 
             foreach ($data['menu_items'] as $item) {
                 if (!isset($restaurantIds[$item['restaurant_id']])) continue;
